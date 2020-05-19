@@ -1,0 +1,51 @@
+using System;
+using System.IO;
+using System.Collections;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+
+namespace DataTables
+{
+    public partial class Table%(class_name)s
+    {
+	%(row_fields)s
+		
+		//--------------------------------------------------
+		
+        private static Dictionary<%(key_type)s, Table%(class_name)s> m_TableDic = new Dictionary<%(key_type)s, Table%(class_name)s>();
+        private static List<Table%(class_name)s> m_List;
+	   
+		public static void Init(string data)
+		{
+			m_TableDic = JsonConvert.DeserializeObject<Dictionary<%(key_type)s, Table%(class_name)s>>(data);
+		}
+
+		public static List<Table%(class_name)s> GetList()
+		{
+			if (m_List == null)
+			{
+				m_List = new List<Table%(class_name)s>();
+				foreach (var v in m_TableDic.Values)
+					m_List.Add(v);
+			}
+			return m_List;
+		}
+
+        public static Table%(class_name)s GetData(%(key_type)s key)
+        {
+			Table%(class_name)s row;
+			m_TableDic.TryGetValue(key, out row);
+			return row;
+        }
+
+        public static bool HasRow(%(key_type)s key)
+        {
+            return m_TableDic.ContainsKey(key);
+        }
+
+        public static Dictionary<%(key_type)s, Table%(class_name)s> GetTable()
+        {
+            return m_TableDic;
+        }
+    }
+}

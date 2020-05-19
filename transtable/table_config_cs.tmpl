@@ -1,0 +1,46 @@
+using System;
+using System.IO;
+using System.Collections;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+
+namespace DataTables
+{
+    public partial class Table%(class_name)s
+    {
+	%(row_fields)s
+		
+		//--------------------------------------------------
+		
+        private static Dictionary<%(key_type)s, Table%(class_name)s> m_TableDic = new Dictionary<%(key_type)s, Table%(class_name)s>();
+        private static Dictionary<%(conf_key_type)s, Table%(class_name)s> m_ConfDic;
+	   
+		public static void Init(string data)
+		{
+			m_TableDic = JsonConvert.DeserializeObject<Dictionary<%(key_type)s, Table%(class_name)s>>(data);
+		}
+
+		public static Dictionary<%(conf_key_type)s, Table%(class_name)s> GetConfDic()
+		{
+			if (m_ConfDic == null)
+			{
+				m_ConfDic = new Dictionary<%(conf_key_type)s, Table%(class_name)s>();
+				foreach (var v in m_TableDic.Values)
+					m_ConfDic.Add(v.%(conf_name)s, v);
+			}
+			return m_ConfDic;
+		}
+
+        public static Table%(class_name)s GetData(%(conf_key_type)s key)
+        {
+			Table%(class_name)s row;
+			m_ConfDic.TryGetValue(key, out row);
+			return row;
+        }
+
+        public static Dictionary<%(conf_key_type)s, Table%(class_name)s> GetTable()
+        {
+            return m_ConfDic;
+        }
+    }
+}
