@@ -23,7 +23,7 @@ class TransConfigCs(Trans):
         tmp_field = ""
         for i in range(len(data_desc)):
             x = data_desc[i]
-            tmp_field = '\t' + "public " + x[1]+" " + x[0] + " { get; set; };"
+            tmp_field = '\t' + "public " + x[1]+" " + x[0] + ";"
             strlen = 50
             field_desc[i] = field_desc[i].replace("\n", " ")
             row_fields += (tmp_field + " " *

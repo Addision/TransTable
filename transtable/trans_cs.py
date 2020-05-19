@@ -1,7 +1,7 @@
 '''
 @Author: jia.lai
 @Date: 2020-05-16 20:41:26
-@LastEditTime: 2020-05-19 09:57:32
+@LastEditTime: 2020-05-19 16:47:12
 @Description: 
 @Version: 1.0
 '''
@@ -21,7 +21,7 @@ class TransCs(Trans):
         tmp_field = ""
         for i in range(len(data_desc)):
             x = data_desc[i]
-            tmp_field = '\t' + "public " + x[1]+" " + x[0] + " { get; set; };"
+            tmp_field = '\t' + "public " + x[1]+" " + x[0] + ";"
             strlen = 50
             field_desc[i] = field_desc[i].replace("\n", " ")
             row_fields += (tmp_field + " " *
