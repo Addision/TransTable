@@ -1,7 +1,7 @@
 '''
 @Author: jia.lai
 @Date: 2020-05-16 20:40:44
-@LastEditTime: 2020-05-19 09:58:05
+@LastEditTime: 2020-05-19 16:05:12
 @Description: 导表工具
 @Version: 1.0
 '''
@@ -55,8 +55,6 @@ if __name__ == '__main__':
             # 添加md5验证
             if not trans_md5.is_update(excel):
                 continue
-            else:
-                trans_md5.update_md5_file()
             print('开始读表:'+table_name)
             ret, excel_sheet, field_desc, data_desc, table_field = read_excel.read_excel(
                 excel, output)
@@ -79,11 +77,14 @@ if __name__ == '__main__':
                 trans_conf = TransConfigCs()
                 trans_conf.gen_config(
                     table_name, data_desc, field_desc, code_dir)
-            print('完成导表:'+table_name)
+            print('完成导出:'+table_name)
     except Exception as e:
-        print('导表错误')
+        print('导表失败')
         traceback.print_exc()
+        os.system("pause")
+        sys.exit()
 
-    print('导表结束.....')
+    trans_md5.update_md5_file()
+    print('导表成功.....')
     os.system("pause")
     pass

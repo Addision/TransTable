@@ -1,7 +1,7 @@
 '''
 @Author: jia.lai
 @Date: 2020-05-16 22:34:56
-@LastEditTime: 2020-05-18 10:44:32
+@LastEditTime: 2020-05-19 16:03:43
 @Description: 将excel表转成json保存
 @Version: 1.0
 '''
@@ -25,13 +25,21 @@ class TransJson(object):
         for i in range(ncols):
             if excel_sheet.row_values(2)[i] not in table_field.keys():
                 continue
+            if not row_values[i]:
+                row_values[i] = ''
             field_type = excel_sheet.row_values(0)[i]
             field_id = excel_sheet.row_values(2)[i]
             try:
                 if field_type in ['INT32', 'INT64', 'UINT32', 'UINT64', 'INT']:
-                    json_row_dict[field_id] = int(row_values[i])
+                    if row_values[i] == '':
+                        json_row_dict[field_id] = 0
+                    else:
+                        json_row_dict[field_id] = int(row_values[i])
                 if field_type in ['FLOAT', 'DOUBLE']:
-                    json_row_dict[field_id] = float(row_values[i])
+                    if row_values[i] == '':
+                        json_row_dict[field_id] = 0.0
+                    else:
+                        json_row_dict[field_id] = float(row_values[i])
                 if field_type in ['STRING', 'CHAR']:
                     json_row_dict[field_id] = str(row_values[i])
                 if "L" in field_type and row_values[i] == '':
